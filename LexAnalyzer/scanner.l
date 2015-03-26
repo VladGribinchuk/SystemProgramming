@@ -5,6 +5,8 @@
   #include "scan_header.h"
   
   int num_lines = 1;
+  int count_id = 0;
+  int count_num = 0;
 %}
 
 DIGIT [0-9]
@@ -46,8 +48,8 @@ while|WHILE		return _WHILE_STAT;
 \,		return _COMMA;
 \.		return _DOT;
 
-{LETTER}({LETTER}|{DIGIT})*	return _ID;
-{DIGIT}				return _NUM;
+{LETTER}({LETTER}|{DIGIT})*	{count_id++;return _ID;}
+{DIGIT}				{count_num++;return _NUM;}
 
 \n				{num_lines++;}
 [\t\f' '] 			;
@@ -262,6 +264,10 @@ int main( int argc, char **argv )
     }  // end switch
     token_lexeme = yylex();
   } // end while
+  
+  printf("Count identifier = %d\n", count_id);
+  printf("Count numbers = %d\n", count_num);
+  
 }
 
 
