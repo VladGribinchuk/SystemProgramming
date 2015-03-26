@@ -1,0 +1,13 @@
+CONST
+  A =  2,  B = 3;
+VAR x, y, z;
+
+PROCEDURE func;
+BEGIN  
+  z := x * y;
+END;
+
+BEGIN
+  x := A;  y := B;
+  CALL func;
+END.
