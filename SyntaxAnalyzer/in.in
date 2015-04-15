@@ -1,0 +1,18 @@
+CONST A = 1, 
+      B = 2;
+
+VAR x, y, z;
+
+PROCEDURE func;
+BEGIN
+  WHILE x < y DO
+  BEGIN
+    y := y - 2;
+  END;
+END;
+
+BEGIN
+  x := (A+B)*2;
+  y := x*4;
+  CALL func;
+END.
