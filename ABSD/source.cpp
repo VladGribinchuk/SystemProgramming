@@ -1,3 +1,9 @@
+// Analyzer by follow grammar rules:
+//	S->S0 | S1 | P0 | P1
+//	P->N.
+//	N -> 0 | 1 | N0 | N1
+// Create by Gribinchuk Vladislav
+
 #include <iostream>
 const size_t _MAXLENGTH = 256;
 
