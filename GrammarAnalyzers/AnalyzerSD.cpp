@@ -3,7 +3,6 @@
 //		S->S0 | S1 | P0 | P1
 //		P->N.
 //		N -> 0 | 1 | N0 | N1
-// 2. AnalyzerMRD - Analyzer by Method of Recursive Descent
 // Create by Gribinchuk Vladislav
 
 #include <iostream>
