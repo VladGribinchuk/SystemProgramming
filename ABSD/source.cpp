@@ -1,29 +1,43 @@
-// Analyzer by follow grammar rules:
-//	S->S0 | S1 | P0 | P1
-//	P->N.
-//	N -> 0 | 1 | N0 | N1
-// Create by Gribinchuk Vladislav
-
 #include <iostream>
 const size_t _MAXLENGTH = 256;
 
 class Analyzer
 {
+private:
+	// internal var and data
+	enum state { _H, _N, _P, _S, _ER };
+	int CurState = state::_H;
+	std::string buf;
+	FILE* pf;
+
 public:
 
-	////////////// Constructors //////////////
-	// 1. Open file for read data from it
-	Analyzer(char* _fname)
+	// _fromfile - the indicator of file presence
+	// _buf - name of file when _fromfile is true otherwise
+	// _buf - input buffer 
+	Analyzer(char* _buf, bool _fromfile = 0)
 	{
-		fopen_s(&pf, _fname, "r");
+		if (_fromfile){
+			//
+			// True value of _fromfile means, that 
+			// input data will be taken from file path _buf
+			fopen_s(&pf, _buf, "r");
+			
+			int offset = 0;
+			while (!feof(pf))
+				buf.push_back(fgetc(pf));
+			// last element is symbol EOF
+			// thus it will be removed
+			buf.pop_back();
+		}
+		else {
+			//
+			// otherwise input data is _buf
+			buf = _buf;
+		}
+		
 	}
-
-	// 2. Create buffer from input string
-	Analyzer(std::string _buf)
-	{
-		buf = _buf;	
-	}
-	//////////// End Constructors ////////////
+	//////////// End Constructor ////////////
 
 	~Analyzer()
 	{
@@ -32,21 +46,10 @@ public:
 
 	int scan()
 	{
-		// if buffer not empty
-		// analyze buffer
 		if (!buf.empty())
 			for (int i = 0; i < buf.size(); ++i)
 				if (analyzer(buf[i]) == state::_ER)
 					return -1;	
-				else;
-		else
-			// or analyze opened file
-			while (!feof(pf)){
-				char sym = fgetc(pf);
-				if (sym != -1)
-					if (analyzer(sym) == state::_ER)
-					return -1;
-			}
 
 		return 0;
 	}
@@ -84,29 +87,21 @@ private:
 				CurState = state::_ER;
 			break;
 		}
-
 		return CurState;
 	}
-	
-	// internal var and data
-	enum state { _H, _N, _P, _S, _ER };
-	int CurState = state::_H;
-	std::string buf;
-	FILE* pf;
-};
+
+}; // end class Analyzer
 
 int main(int argc, char** argv)
 {
 	Analyzer* pAnalyzerObj;
 
-	// Open file or read input data from stdin
 	if (--argc)
-		pAnalyzerObj = new Analyzer(argv[1]);
+		pAnalyzerObj = new Analyzer(argv[1],true);
 	else{
 		char input[_MAXLENGTH] = "";
 		std::cin >> input;
-		std::string str(input);
-		pAnalyzerObj = new Analyzer(str);
+		pAnalyzerObj = new Analyzer(input);
 	}
 
 	// Analyze input data and get result
@@ -115,8 +110,7 @@ int main(int argc, char** argv)
 	else
 		std::cout << "success!\n";
 	
-	// Clean up and pause
+	// Clean up
 	delete pAnalyzerObj;
-	system("pause");
 	return 0;
 }
