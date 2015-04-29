@@ -1,7 +1,15 @@
+// AnalyzerSD - Analyzer by State Diagrams
+//	Analyzing by follow grammar rules:
+//		S->S0 | S1 | P0 | P1
+//		P->N.
+//		N -> 0 | 1 | N0 | N1
+// 2. AnalyzerMRD - Analyzer by Method of Recursive Descent
+// Create by Gribinchuk Vladislav
+
 #include <iostream>
 const size_t _MAXLENGTH = 256;
 
-class Analyzer
+class AnalyzerSD
 {
 private:
 	// internal var and data
@@ -15,7 +23,7 @@ public:
 	// _fromfile - the indicator of file presence
 	// _buf - name of file when _fromfile is true otherwise
 	// _buf - input buffer 
-	Analyzer(char* _buf, bool _fromfile = 0)
+	AnalyzerSD(char* _buf, bool _fromfile = 0)
 	{
 		if (_fromfile){
 			//
@@ -39,7 +47,7 @@ public:
 	}
 	//////////// End Constructor ////////////
 
-	~Analyzer()
+	~AnalyzerSD()
 	{
 		if (pf) fclose(pf);
 	}
@@ -90,18 +98,18 @@ private:
 		return CurState;
 	}
 
-}; // end class Analyzer
+}; // end class AnalyzerSD
 
 int main(int argc, char** argv)
 {
-	Analyzer* pAnalyzerObj;
+	AnalyzerSD* pAnalyzerObj;
 
 	if (--argc)
-		pAnalyzerObj = new Analyzer(argv[1],true);
+		pAnalyzerObj = new AnalyzerSD(argv[1],true);
 	else{
 		char input[_MAXLENGTH] = "";
 		std::cin >> input;
-		pAnalyzerObj = new Analyzer(input);
+		pAnalyzerObj = new AnalyzerSD(input);
 	}
 
 	// Analyze input data and get result
