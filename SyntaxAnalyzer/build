@@ -1,0 +1,5 @@
+#!/bin/bash
+byacc -d yacc_pass.y
+lex lex_pass.l
+cc lex.yy.c y.tab.c -o SyntaxAnalyzer
+./SyntaxAnalyzer in

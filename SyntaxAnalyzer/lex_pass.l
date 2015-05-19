@@ -25,18 +25,14 @@ WHILE		return _WHILE;
 \#		return _NEQ;
 ":="		return _ASSIGN;
 \;		return _SEMICOLON;
-\(		return _LPAREN;
-\)		return _RPAREN;
 [\,]		return _COMMA;
-\.		return _DOT;
   
-[\+\-\*\/]	return _MATH_OPER;
 [\>\<] 		return _LOGIC_OPER;
   
-{DIGIT}		return _NUM;
-{LETTER}({LETTER}|{DIGIT})*	return _ID;
+{DIGIT}		yylval.value = atoi(yytext); return _NUM;
+{LETTER}({LETTER}|{DIGIT})*	yylval.str = strdup(yytext); return _ID;
 \n		num_line++;
-[\t\f' ']	;
-.		return _UNKN_SYM;
+[\t' ']	;
+.		return (int) yytext[0];
   
 %%

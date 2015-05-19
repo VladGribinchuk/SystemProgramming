@@ -1,0 +1,15 @@
+CONST A = 1, B=3;
+
+VAR x, y, z;
+
+PROCEDURE func;
+BEGIN
+
+END;
+
+BEGIN
+  x := A+B;
+  y := x*4;
+  z := (x+y) / 4;
+  CALL func;
+END.
